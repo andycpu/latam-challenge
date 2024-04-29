@@ -13,6 +13,9 @@ jobs:
             echo "$GOOGLE_APPLICATION_CREDENTIALS" > /tmp/gcp-key.json
             export GOOGLE_APPLICATION_CREDENTIALS="/tmp/gcp-key.json"
 
+      # activate SA for gcloud
+      gcloud auth activate-service-account --key-file="/tmp/gcp-key.json"
+
       # Function specific details (replace with your configuration)
       - run: |
           FUNCTION_NAME=get_flights
