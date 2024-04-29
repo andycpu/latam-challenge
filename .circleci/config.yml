@@ -19,6 +19,7 @@ jobs:
 
       # Function specific details (replace with your configuration)
       - run: |
+          PROJECT=latam-challenge-421420
           FUNCTION_NAME=get_flights
           REGION=southamerica-west1
           ENTRYPOINT=get_flights
@@ -26,6 +27,7 @@ jobs:
           SOURCE=./cloud_function
           gcloud functions deploy $FUNCTION_NAME \
               --gen2 \
+              --project $PROJECT \
               --region $REGION \
               --runtime $RUNTIME \
               --trigger-http \
