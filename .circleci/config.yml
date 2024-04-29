@@ -18,8 +18,6 @@ jobs:
   deploy:
     docker:
       - image: google/cloud-sdk:latest  # Use the latest Cloud SDK image
-    requires:
-      - test  # Deployment workflow requires successful completion of 'test' workflow
     steps:
       - checkout
       # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
