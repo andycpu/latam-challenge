@@ -6,10 +6,12 @@ jobs:
       - image: google/cloud-sdk:latest  # Use the latest Cloud SDK image
     steps:
       - checkout
-      - run: echo $GCLOUD_SERVICE_KEY | base64 --decode > gcloud-service-key.json  # Decode service account key (replace with actual decoding step)
-      - run: |
-          gcloud auth activate-service-account --key-file=gcloud-service-key.json
-          gcloud config set project $GCP_PROJECT_ID  # Set project ID
+      # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
+      - run:
+          name: Set Google Cloud service account key
+          command: |
+            echo "$GOOGLE_APPLICATION_CREDENTIALS" > /tmp/gcp-key.json
+            export GOOGLE_APPLICATION_CREDENTIALS="/tmp/gcp-key.json"
 
       # Function specific details (replace with your configuration)
       - run: |
