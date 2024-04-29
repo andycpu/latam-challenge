@@ -51,16 +51,6 @@ jobs:
               --service-account cf-deployer-sa@latam-challenge-421420.iam.gserviceaccount.com \
               --source=$SOURCE
 
-# workflows:
-#   version: 2
-#   test:
-#     jobs:
-#       - test
-
-#   deploy:
-#     jobs:
-#       - deploy
-
 workflows:
    test-deploy:
        jobs:
