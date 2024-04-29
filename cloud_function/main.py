@@ -22,13 +22,13 @@ def get_flights(request):
     # default query (including all departure cities)
     query = """
     SELECT *
-    FROM `latam-challenge-421420.latam_flights.flights`
+    FROM `latam-challenge-421420.latam_ds.flights`
     """
     # query for filtering by departure city
     if len(departure_city) > 0:
         query = """
         SELECT *
-        FROM `latam-challenge-421420.latam_flights.flights`
+        FROM `latam-challenge-421420.latam_ds.flights`
         WHERE Departure_City = '""" + departure_city + """'
         """
 
