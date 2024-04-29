@@ -10,40 +10,13 @@ resource "google_bigquery_dataset" "latam_ds" {
   location      = "southamerica-west1"
 }
 
-# resource "google_bigquery_table" "flights" {
-#   dataset_id          = google_bigquery_dataset.latam_ds.dataset_id
-#   table_id            = "flights"
-#   #deletion_protection = false
-#   external_data_configuration {
-#     autodetect    = true
-#     source_format = "GOOGLE_SHEETS"
+resource "google_service_account" "cf_deployer_sa" {
+  account_id   = "cf-deployer-sa"
+  display_name = "Service Account to deploy CF"
+}
 
-#     google_sheets_options {
-#       skip_leading_rows = 1
-#     }
-
-#     source_uris = [
-#       "https://docs.google.com/spreadsheets/d/18MsF6UQbzjPq9GAtrIVxlkUWhAjO_8eKaj031J2uEFA",
-#     ]
-#   }
-# }
-
-resource "google_cloudfunctions_function" "get_flights" {
-  name                = "get_flights"
-  runtime             = "python39"
-  #source_archive_url  = "gs://path/to/your/function/source.zip"
-  entry_point         = "get_flights"
-  timeout             = 60
-  available_memory_mb = 256
-  max_instances       = 1
-  trigger_http        = "GET"
-
-  source_repository {
-    url = "https://source.developers.google.com/projects/your-project-id/repos/your-repo-id/moveable-aliases/master"
-  }
-#   event_trigger {
-#     event_type = "http"
-#     # Optionally, add other trigger settings like security_level, etc.
-#   }
-
+resource "google_project_iam_member" "cf_deployer_sa_cloudfunctions_developer" {
+  project = google_service_account.cf_deployer_sa.project
+  role    = "roles/cloudfunctions.developer"
+  member  = "serviceAccount:${google_service_account.cf_deployer_sa.email}"
 }
