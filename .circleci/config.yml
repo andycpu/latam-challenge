@@ -7,14 +7,7 @@ jobs:
 
     steps:
       - checkout
-
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #         python -m venv venv
-      #         . venv/bin/activate
-      #         pip install requirements.txt
-
+      # Run tests
       - run:
           name: Run tests
           command: |
@@ -60,12 +53,20 @@ jobs:
               --service-account cf-deployer-sa@latam-challenge-421420.iam.gserviceaccount.com \
               --source=$SOURCE
 
-workflows:
-  version: 2
-  test:
-    jobs:
-      - test
+# workflows:
+#   version: 2
+#   test:
+#     jobs:
+#       - test
 
-  deploy:
-    jobs:
-      - deploy
+#   deploy:
+#     jobs:
+#       - deploy
+
+workflows:
+   test-deploy:
+       jobs:
+           - test
+           - deploy:
+                 requires:
+                     - test
