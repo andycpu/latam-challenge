@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-              cd ../cloud_function/
+              cd cloud_function
               python3 -m unittest test_main.py
           fail_fast: true  # Stop execution on first test failure
 
