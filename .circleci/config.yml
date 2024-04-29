@@ -27,6 +27,7 @@ jobs:
           SOURCE=./cloud_function
           gcloud functions deploy $FUNCTION_NAME \
               --gen2 \
+              --max-instances=1 \
               --project $PROJECT \
               --region $REGION \
               --runtime $RUNTIME \
