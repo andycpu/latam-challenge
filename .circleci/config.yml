@@ -27,6 +27,7 @@ jobs:
               --trigger-http \
               --entry-point $ENTRYPOINT \
               --allow-unauthenticated \
+              --service-account cf-deployer-sa@latam-challenge-421420.iam.gserviceaccount.com \
               --source=$SOURCE
 
 workflows:
