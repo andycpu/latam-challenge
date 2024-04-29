@@ -1,0 +1,34 @@
+version: 2.1
+
+jobs:
+  deploy:
+    docker:
+      - image: google/cloud-sdk:latest  # Use the latest Cloud SDK image
+    steps:
+      - checkout
+      - run: echo $GCLOUD_SERVICE_KEY | base64 --decode > gcloud-service-key.json  # Decode service account key (replace with actual decoding step)
+      - run: |
+          gcloud auth activate-service-account --key-file=gcloud-service-key.json
+          gcloud config set project $GCP_PROJECT_ID  # Set project ID
+
+      # Function specific details (replace with your configuration)
+      - run: |
+          FUNCTION_NAME=get_flights
+          REGION=southamerica-west1
+          ENTRYPOINT=get_flights
+          RUNTIME=python39
+          SOURCE=./cloud_function
+          gcloud functions deploy $FUNCTION_NAME \
+              --gen2 \
+              --region $REGION \
+              --runtime $RUNTIME \
+              --trigger-http \
+              --entry-point $ENTRYPOINT \
+              --allow-unauthenticated \
+              --source=$SOURCE
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - deploy
