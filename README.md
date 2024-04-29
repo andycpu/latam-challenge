@@ -15,16 +15,24 @@ Deployment de infra a traves de terraform
 
 - Deployment de la Cloud Function con circleci
 Uso de una SA (service account) definida en terraform para hacer el deployment.
-Una mejora que se propone aca seria usar "Workload Identity Federation" en vez de keys para la autenticacion de la SA.
+Mejoras:
+    - Una mejora que se propone aca seria usar "Workload Identity Federation" en vez de keys para la autenticacion de la SA.
+    - Otra seria que el deployment automatico se realice solo cuando haya cambios relevantes a la API. No cualquier commit.
+
 
 - Datos ingresados a BQ manualmente a traves de GCP console para simplificar. Lo ideal seria configurar la tabla para que tome los datos de pub sub directamente (o de otra fuente).
 
 
-![alt text](latam-challenge.drawio.png)
+![alt text](docs/latam-challenge.drawio.png)
 
 Nota: Pub/Sub no esta implementado
 
 ## Parte 3 - Pruebas de Integración y Puntos Críticos de Calidad
 
+Se implementaron 2 tests que se ejecutan dentro del flujo CI/CD en circleci. 
+
+Nota: se modifico el flujo CI/CD para que el deployment de la Cloud Function suceda solo si los test pasan
+
+![alt text](docs/screenshot-CI-CD.jpeg)
 
 ## Parte 4 - Métricas y Monitoreo
